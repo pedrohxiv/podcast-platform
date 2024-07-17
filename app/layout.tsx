@@ -7,6 +7,8 @@ const font = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Podcast Platform",
+  description: "Generate your podcasts using AI",
+  icons: { icon: "/icons/logo.svg" },
 };
 
 interface Props {
