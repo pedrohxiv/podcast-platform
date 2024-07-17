@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
+import { ConvexClerkProvider } from "@/components/providers/convex-clerk-provider";
 import "@/styles/globals.css";
 
 const font = Inter({ subsets: ["latin"] });
@@ -20,7 +20,7 @@ const AppLayout = ({ children }: Props) => {
   return (
     <html>
       <body className={font.className}>
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+        <ConvexClerkProvider>{children}</ConvexClerkProvider>
       </body>
     </html>
   );

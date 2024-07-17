@@ -144,7 +144,13 @@ html {
   background: #f97535;
 }
 
-.cl-footerActionLink {
+.cl-formButtonPrimary:hover {
+  background: #f97535;
+  opacity: 0.8;
+}
+
+.cl-footerActionLink,
+.cl-footerActionLink:hover {
   color: #f97535;
 }
 
