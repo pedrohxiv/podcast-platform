@@ -1,9 +1,8 @@
-import type { WebhookEvent } from "@clerk/backend";
 import { httpRouter } from "convex/server";
-import { Webhook } from "svix";
 
 import { internal } from "@/convex/_generated/api";
 import { httpAction } from "@/convex/_generated/server";
+import { validateRequest } from "@/lib/utils";
 
 const http = httpRouter();
 
@@ -42,29 +41,5 @@ http.route({
     return new Response(null, { status: 200 });
   }),
 });
-
-const validateRequest = async (
-  req: Request
-): Promise<WebhookEvent | undefined> => {
-  const payload = await req.text();
-
-  const headers = {
-    "svix-id": req.headers.get("svix-id")!,
-    "svix-timestamp": req.headers.get("svix-timestamp")!,
-    "svix-signature": req.headers.get("svix-signature")!,
-  };
-
-  const webhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET!);
-
-  let event: Event | null = null;
-
-  try {
-    event = webhook.verify(payload, headers) as Event;
-  } catch (_) {
-    return;
-  }
-
-  return event as unknown as WebhookEvent;
-};
 
 export default http;

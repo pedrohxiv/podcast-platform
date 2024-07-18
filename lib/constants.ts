@@ -1,48 +1,3 @@
-export const sidebarLinks = [
-  {
-    imageUrl: "/icons/home.svg",
-    route: "/",
-    label: "Home",
-  },
-  {
-    imageUrl: "/icons/discover.svg",
-    route: "/discover",
-    label: "Discover",
-  },
-  {
-    imageUrl: "/icons/microphone.svg",
-    route: "/create-podcast",
-    label: "Create Podcast",
-  },
-];
-
-export const voiceDetails = [
-  {
-    id: 1,
-    name: "alloy",
-  },
-  {
-    id: 2,
-    name: "echo",
-  },
-  {
-    id: 3,
-    name: "fable",
-  },
-  {
-    id: 4,
-    name: "onyx",
-  },
-  {
-    id: 5,
-    name: "nova",
-  },
-  {
-    id: 6,
-    name: "shimmer",
-  },
-];
-
 export const podcastData = [
   {
     id: 1,
@@ -99,5 +54,59 @@ export const podcastData = [
     description: "This is how the news should sound",
     imageUrl:
       "https://lovely-flamingo-139.convex.cloud/api/storage/221ee4bd-435f-42c3-8e98-4a001e0d806e",
+  },
+];
+
+export const sidebarLinks = [
+  {
+    imageUrl: "/icons/home.svg",
+    route: "/",
+    label: "Home",
+  },
+  {
+    imageUrl: "/icons/discover.svg",
+    route: "/discover",
+    label: "Discover",
+  },
+  {
+    imageUrl: "/icons/microphone.svg",
+    route: "/create-podcast",
+    label: "Create Podcast",
+  },
+];
+
+export const voiceCategories = [
+  "allow",
+  "shimmer",
+  "nova",
+  "echo",
+  "fable",
+  "onyx",
+];
+
+export const voiceDetails = [
+  {
+    id: 1,
+    name: "alloy",
+  },
+  {
+    id: 2,
+    name: "echo",
+  },
+  {
+    id: 3,
+    name: "fable",
+  },
+  {
+    id: 4,
+    name: "onyx",
+  },
+  {
+    id: 5,
+    name: "nova",
+  },
+  {
+    id: 6,
+    name: "shimmer",
   },
 ];
