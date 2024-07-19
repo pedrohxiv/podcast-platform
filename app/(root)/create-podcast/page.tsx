@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "convex/react";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -19,6 +21,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { createPodcastSchema } from "@/lib/validations";
 
@@ -37,6 +41,8 @@ const CreatePodcastPage = () => {
   const [voicePrompt, setVoicePrompt] = useState<string>("");
   const [voiceType, setVoiceType] = useState<string | null>(null);
 
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof createPodcastSchema>>({
     resolver: zodResolver(createPodcastSchema),
     defaultValues: {
@@ -45,9 +51,48 @@ const CreatePodcastPage = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof createPodcastSchema>) {
-    console.log(values);
-  }
+  const createPodcast = useMutation(api.podcasts.createPodcast);
+
+  const { toast } = useToast();
+
+  const onSubmit = async ({
+    title,
+    description,
+  }: z.infer<typeof createPodcastSchema>) => {
+    setIsSubmitting(true);
+
+    try {
+      if (!title || !description || !audioUrl || !imageUrl || !voiceType) {
+        return;
+      }
+
+      await createPodcast({
+        title,
+        description,
+        audioUrl,
+        imageUrl,
+        voiceType,
+        imagePrompt,
+        voicePrompt,
+        views: 0,
+        audioDuration,
+        audioStorageId: audioStorageId!,
+        imageStorageId: imageStorageId!,
+      });
+
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with submitting your podcast.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className="mt-10 flex flex-col">

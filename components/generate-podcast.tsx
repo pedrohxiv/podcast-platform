@@ -130,6 +130,8 @@ export const GeneratePodcast = ({
 
       const blob = await file.arrayBuffer().then((ab) => new Blob([ab]));
 
+      setVoiceType("owner");
+
       handleAudio(blob, file.name);
     } catch (error) {
       console.error(error);

@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import OpenAI from "openai";
 import type { SpeechCreateParams } from "openai/resources/audio/speech.mjs";
 
@@ -35,7 +35,7 @@ export const generateImageAction = action({
     const url = response.data[0].url;
 
     if (!url) {
-      throw new Error("Error generating thumbnail");
+      throw new ConvexError("Error generating thumbnail");
     }
 
     const image = await fetch(url);
