@@ -18,18 +18,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { Id } from "@/convex/_generated/dataModel";
-import { voiceCategories } from "@/lib/constants";
-import { cn } from "@/lib/utils";
 import { createPodcastSchema } from "@/lib/validations";
 
 const CreatePodcastPage = () => {
@@ -88,42 +78,6 @@ const CreatePodcastPage = () => {
                 </FormItem>
               )}
             />
-            <div className="flex flex-col gap-2.5">
-              <Label className="text-16 font-bold text-white-1">
-                Select AI Voice
-              </Label>
-              <Select onValueChange={(value) => setVoiceType(value)}>
-                <SelectTrigger
-                  className={cn(
-                    "text-16 w-full border-none bg-black-1 text-gray-1 focus:ring-orange-1"
-                  )}
-                  disabled={isSubmitting}
-                >
-                  <SelectValue
-                    placeholder="Select AI Voice"
-                    className="placeholder:text-gray-1"
-                  />
-                </SelectTrigger>
-                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
-                  {voiceCategories.map((category) => (
-                    <SelectItem
-                      key={category}
-                      className="capitalize focus:bg-orange-1 cursor-pointer"
-                      value={category}
-                    >
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-                {voiceType && (
-                  <audio
-                    src={`/${voiceType}.mp3`}
-                    autoPlay
-                    className="hidden"
-                  />
-                )}
-              </Select>
-            </div>
             <FormField
               control={form.control}
               name="description"
@@ -145,13 +99,14 @@ const CreatePodcastPage = () => {
               )}
             />
           </div>
-          <div className="flex flex-col pt-10">
+          <div className="flex flex-col pt-2">
             <GeneratePodcast
               audio={audioUrl}
               setAudio={setAudioUrl}
               setAudioDuration={setAudioDuration}
               setAudioStorageId={setAudioStorageId}
               setVoicePrompt={setVoicePrompt}
+              setVoiceType={setVoiceType}
               voicePrompt={voicePrompt}
               voiceType={voiceType!}
               isSubmitting={isSubmitting}
@@ -168,7 +123,13 @@ const CreatePodcastPage = () => {
               <Button
                 type="submit"
                 className="text-16 w-full bg-orange-1 py-4 font-extrabold text-white-1 transition-all duration-500 hover:opacity-80 focus-visible:ring-orange-1"
-                disabled={isSubmitting}
+                disabled={
+                  !form.getValues("title") ||
+                  !form.getValues("description") ||
+                  !audioUrl ||
+                  !imageUrl ||
+                  isSubmitting
+                }
               >
                 {isSubmitting ? (
                   <>
