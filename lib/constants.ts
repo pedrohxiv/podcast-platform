@@ -76,7 +76,7 @@ export const sidebarLinks = [
 ];
 
 export const voiceCategories = [
-  "allow",
+  "alloy",
   "shimmer",
   "nova",
   "echo",

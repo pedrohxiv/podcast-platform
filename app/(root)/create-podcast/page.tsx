@@ -153,7 +153,7 @@ const CreatePodcastPage = () => {
               setAudioStorageId={setAudioStorageId}
               setVoicePrompt={setVoicePrompt}
               voicePrompt={voicePrompt}
-              voiceType={voiceType}
+              voiceType={voiceType!}
               isSubmitting={isSubmitting}
             />
             <GenerateThumbnail

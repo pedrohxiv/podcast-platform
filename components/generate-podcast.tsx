@@ -18,7 +18,7 @@ interface Props {
   >;
   setVoicePrompt: React.Dispatch<React.SetStateAction<string>>;
   voicePrompt: string;
-  voiceType: string | null;
+  voiceType: string;
 }
 
 export const GeneratePodcast = ({
@@ -56,8 +56,9 @@ export const GeneratePodcast = ({
       <div className="mt-5 w-full max-w-[200px]">
         <Button
           type="submit"
+          onClick={generatePodcast}
           className="text-16 bg-orange-1 py-4 font-bold text-white-1 transition-all duration-500 hover:opacity-80 focus-visible:ring-orange-1"
-          disabled={isSubmitting || isGenerating}
+          disabled={!voiceType || !voicePrompt || isSubmitting || isGenerating}
         >
           {isGenerating ? (
             <>

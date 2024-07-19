@@ -3,6 +3,7 @@ import Image from "next/image";
 import { LeftSidebar } from "@/components/left-sidebar";
 import { MobileNav } from "@/components/mobile-nav";
 import { RightSidebar } from "@/components/right-sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 interface Props {
   children: React.ReactNode;
@@ -24,7 +25,10 @@ const RootLayout = ({ children }: Props) => {
               />
               <MobileNav />
             </div>
-            <div className="flex flex-col md:pb-14">{children}</div>
+            <div className="flex flex-col md:pb-14">
+              {children}
+              <Toaster />
+            </div>
           </div>
         </section>
         <RightSidebar />
