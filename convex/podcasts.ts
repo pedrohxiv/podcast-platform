@@ -1,6 +1,6 @@
 import { ConvexError, v } from "convex/values";
 
-import { mutation } from "@/convex/_generated/server";
+import { mutation, query } from "@/convex/_generated/server";
 
 export const getUrl = mutation({
   args: { storageId: v.id("_storage") },
@@ -48,5 +48,13 @@ export const createPodcast = mutation({
     });
 
     return podcast;
+  },
+});
+
+export const getTrendingPodcasts = query({
+  handler: async (ctx) => {
+    const podcasts = await ctx.db.query("podcasts").collect();
+
+    return podcasts;
   },
 });

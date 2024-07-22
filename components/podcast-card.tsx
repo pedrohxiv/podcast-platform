@@ -1,9 +1,11 @@
 import Image from "next/image";
 
+import { Id } from "@/convex/_generated/dataModel";
+
 interface Props {
   description: string;
   imageUrl: string;
-  podcastId: number;
+  podcastId: Id<"podcasts">;
   title: string;
 }
 
