@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useAudio } from "@/components/providers/audio-provider";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -50,6 +51,7 @@ export const PodcastDetailPlayer = ({
   const deletePodcast = useMutation(api.podcasts.deletePodcast);
 
   const { toast } = useToast();
+  const { setAudio } = useAudio();
 
   const handleDelete = async () => {
     setIsDeleting(true);
@@ -75,7 +77,15 @@ export const PodcastDetailPlayer = ({
     }
   };
 
-  const handlePlay = () => {};
+  const handlePlay = () => {
+    setAudio({
+      audioUrl,
+      author,
+      imageUrl,
+      podcastId,
+      title,
+    });
+  };
 
   if (!imageUrl || !authorImageUrl) {
     return (

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 
 import { ConvexClerkProvider } from "@/components/providers/convex-clerk-provider";
 import "@/styles/globals.css";
 
-const font = Inter({ subsets: ["latin"] });
+const font = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Podcast Platform",
@@ -19,9 +19,9 @@ interface Props {
 const AppLayout = ({ children }: Props) => {
   return (
     <html>
-      <body className={font.className}>
-        <ConvexClerkProvider>{children}</ConvexClerkProvider>
-      </body>
+      <ConvexClerkProvider>
+        <body className={font.className}>{children}</body>
+      </ConvexClerkProvider>
     </html>
   );
 };
