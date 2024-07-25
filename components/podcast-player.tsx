@@ -103,7 +103,7 @@ export const PodcastPlayer = () => {
 
   return (
     <div
-      className={cn("sticky bottom-0 left-0 flex size-full flex-col", {
+      className={cn("sticky bottom-0 left-0 flex w-full flex-col", {
         hidden: !audio?.audioUrl || audio.audioUrl === "",
       })}
     >

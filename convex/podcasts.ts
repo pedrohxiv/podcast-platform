@@ -158,7 +158,28 @@ export const getPodcastsByVoiceType = query({
   },
 });
 
-export const getTrendingPodcasts = query({
+export const getTrendingPodcasts = query(async (ctx) => {
+  const now = new Date();
+
+  const oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1)).getTime();
+
+  const podcasts = await ctx.db
+    .query("podcasts")
+    .filter((q) => q.gte(q.field("_creationTime"), oneMonthAgo))
+    .collect();
+
+  return podcasts.sort((a, b) => b.views - a.views).slice(0, 8);
+});
+
+export const getLatestPodcasts = query({
+  handler: async (ctx) => {
+    const podcasts = await ctx.db.query("podcasts").order("asc").collect();
+
+    return podcasts.slice(0, 4);
+  },
+});
+
+export const getPopularPodcasts = query({
   handler: async (ctx) => {
     const podcasts = await ctx.db.query("podcasts").collect();
 

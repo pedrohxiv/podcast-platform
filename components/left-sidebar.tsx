@@ -17,7 +17,7 @@ export const LeftSidebar = () => {
 
   return (
     <section className="left_sidebar">
-      <nav className="flex flex-col gap-6">
+      <nav className="flex flex-col gap-2">
         <Link
           href="/"
           className="flex cursor-pointer items-center gap-1 pb-10 max-lg:justify-center"
@@ -32,13 +32,19 @@ export const LeftSidebar = () => {
             key={route}
             href={route}
             className={cn(
-              "flex gap-3 items-center py-4 max-lg:px-4 justify-center lg:justify-start",
+              "flex gap-3 items-center py-4 max-lg:px-4 -ml-8 justify-center lg:justify-start",
               {
                 "bg-nav-focus border-r-4 border-orange-1": pathname === route,
               }
             )}
           >
-            <Image src={imageUrl} height={24} width={24} alt={label} />
+            <Image
+              src={imageUrl}
+              height={24}
+              width={24}
+              alt={label}
+              className="ml-8"
+            />
             <p>{label}</p>
           </Link>
         ))}

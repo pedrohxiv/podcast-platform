@@ -21,7 +21,7 @@ const DiscoverPage = ({ searchParams: { search = "" } }: Props) => {
       <div className="flex flex-col gap-9">
         <h1 className="text-20 font-bold text-white-1">
           {!search
-            ? "Discover Trending Podcasts"
+            ? "Discover Comunity Podcasts"
             : `Search results for ${search}`}
         </h1>
         {podcasts ? (

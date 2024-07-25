@@ -36,7 +36,7 @@ export const RightSidebar = () => {
   if (!slides || !topPodcasters) {
     return (
       <section className="right_sidebar">
-        <div className="flex-center h-full w-full">
+        <div className="flex-center h-full w-full -mt-4">
           <Loader2 className="animate-spin text-orange-1 size-7" />
         </div>
       </section>
@@ -68,7 +68,7 @@ export const RightSidebar = () => {
         </Link>
       </SignedIn>
       <section className="flex flex-col gap-4 pt-6">
-        <Header title="Fans Like You" />
+        <Header title="Fans Also Like" />
         <Carousel
           opts={{ loop: true }}
           plugins={[carouselPlugin.current]}
@@ -112,7 +112,7 @@ export const RightSidebar = () => {
         </Carousel>
       </section>
       <section className="flex flex-col gap-4 pt-6">
-        <Header title="Top Podcastrs" />
+        <Header title="Top Podcasters" />
         <div className="flex flex-col gap-6">
           {topPodcasters?.slice(0, 3).map((podcaster) => (
             <div
