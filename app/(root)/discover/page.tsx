@@ -1,10 +1,9 @@
 "use client";
 
 import { useQuery } from "convex/react";
-import { Loader2 } from "lucide-react";
 
 import { EmptyState } from "@/components/empty-state";
-import { PodcastCard } from "@/components/podcast-card";
+import { PodcastCard, PodcastCardSkeleton } from "@/components/podcast-card";
 import { Searchbar } from "@/components/searchbar";
 import { api } from "@/convex/_generated/api";
 
@@ -43,8 +42,10 @@ const DiscoverPage = ({ searchParams: { search = "" } }: Props) => {
             )}
           </>
         ) : (
-          <div className="flex-center w-full h-[calc(100vh-238px)]">
-            <Loader2 className="animate-spin text-orange-1 size-7" />
+          <div className="podcast_grid">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <PodcastCardSkeleton key={i} />
+            ))}
           </div>
         )}
       </div>

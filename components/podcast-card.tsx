@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import type { Id } from "@/convex/_generated/dataModel";
 
 interface Props {
@@ -39,6 +40,20 @@ export const PodcastCard = ({
           <h2 className="text-12 truncate font-normal capitalize text-white-4">
             {description}
           </h2>
+        </div>
+      </figure>
+    </div>
+  );
+};
+
+export const PodcastCardSkeleton = () => {
+  return (
+    <div>
+      <figure className="flex flex-col gap-2">
+        <Skeleton className="size-[200px]" />
+        <div className="flex flex-col gap-2">
+          <Skeleton className="text-16 h-6 w-1/2" />
+          <Skeleton className="text-12 h-4 w-[200px]" />
         </div>
       </figure>
     </div>

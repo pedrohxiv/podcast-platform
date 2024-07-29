@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation } from "convex/react";
-import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,6 +17,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "./ui/skeleton";
 
 interface Props {
   audioStorageId: Id<"_storage">;
@@ -88,16 +88,12 @@ export const PodcastDetailPlayer = ({
   };
 
   if (!imageUrl || !authorImageUrl) {
-    return (
-      <div className="flex-center h-screen w-full">
-        <Loader2 className="animate-spin text-orange-1 size-7" />
-      </div>
-    );
+    return <PodcastDetailPlayerSkeleton />;
   }
 
   return (
     <div className="mt-6 flex w-full justify-between max-md:justify-center">
-      <div className="flex flex-col gap-8 max-md:items-center md:flex-row">
+      <div className="flex flex-col gap-8 w-full max-md:items-center md:flex-row">
         <Image
           src={imageUrl}
           height={250}
@@ -105,7 +101,7 @@ export const PodcastDetailPlayer = ({
           alt="Podcast image"
           className="aspect-square rounded-lg"
         />
-        <div className="flex w-full flex-col gap-5 max-md:items-center md:gap-9">
+        <div className="flex w-full flex-col flex-1 gap-5 max-md:items-center md:gap-9">
           <article className="flex flex-col gap-2 max-md:items-center">
             <h1 className="text-32 font-extrabold tracking-[-0.32px] text-white-1">
               {title}
@@ -169,6 +165,27 @@ export const PodcastDetailPlayer = ({
           </DropdownMenuContent>
         </DropdownMenu>
       )}
+    </div>
+  );
+};
+
+export const PodcastDetailPlayerSkeleton = () => {
+  return (
+    <div className="mt-6 flex w-full justify-between max-md:justify-center">
+      <div className="flex flex-col gap-8 w-full max-md:items-center md:flex-row">
+        <Skeleton className="size-[250px]" />
+        <div className="flex w-full flex-col flex-1 gap-5 max-md:items-center md:gap-9">
+          <article className="flex flex-col gap-2 max-md:items-center">
+            <Skeleton className="h-12 w-64" />
+            <figure className="flex cursor-pointer items-center gap-2">
+              <Skeleton className="size-[30px] rounded-full" />
+              <Skeleton className="h-6 w-28" />
+            </figure>
+          </article>
+          <Skeleton className="h-10 w-full max-w-[250px]" />
+        </div>
+      </div>
+      <Skeleton className="size-[24px]" />
     </div>
   );
 };

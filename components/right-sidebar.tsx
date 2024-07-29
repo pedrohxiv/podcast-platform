@@ -3,7 +3,6 @@
 import { SignedIn, useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import Autoplay from "embla-carousel-autoplay";
-import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,6 +15,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 
 export const RightSidebar = () => {
@@ -36,9 +36,39 @@ export const RightSidebar = () => {
   if (!slides || !topPodcasters) {
     return (
       <section className="right_sidebar">
-        <div className="flex-center h-full w-full -mt-4">
-          <Loader2 className="animate-spin text-orange-1 size-7" />
+        <div className="flex gap-3 items-center">
+          <Skeleton className="size-[28px] rounded-full" />
+          <div className="flex w-full items-center justify-between">
+            <Skeleton className="h-6 w-40" />
+            <Skeleton className="size-6" />
+          </div>
         </div>
+        <section className="flex flex-col gap-4 pt-6">
+          <Header
+            title="Fans Also Like"
+            isLoading={!slides || !topPodcasters}
+          />
+          <Skeleton className="size-[242px]" />
+        </section>
+        <section className="flex flex-col gap-4 pt-6">
+          <Header
+            title="Top Podcasters"
+            isLoading={!slides || !topPodcasters}
+          />
+          <div className="flex flex-col gap-6">
+            {Array.from({ length: 2 }).map((_, i) => (
+              <div key={i} className="flex justify-between">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="size-[44px]" />
+                  <Skeleton className="h-4 w-16" />
+                </div>
+                <div className="flex items-center">
+                  <Skeleton className="h-4 w-10" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </section>
     );
   }
@@ -77,11 +107,11 @@ export const RightSidebar = () => {
           onMouseLeave={carouselPlugin.current.reset}
         >
           <CarouselContent>
-            {slides?.slice(0, 5).map((slide) => (
+            {slides.slice(0, 5).map((slide) => (
               <CarouselItem
                 key={slide._id}
                 onClick={() =>
-                  router.push(`/podcasts/${slide.podcast[0]?.podcastId}`)
+                  router.push(`/podcasts/${slide.podcast[0].podcastId}`)
                 }
                 className="cursor-pointer"
               >
@@ -114,7 +144,7 @@ export const RightSidebar = () => {
       <section className="flex flex-col gap-4 pt-6">
         <Header title="Top Podcasters" />
         <div className="flex flex-col gap-6">
-          {topPodcasters?.slice(0, 3).map((podcaster) => (
+          {topPodcasters.slice(0, 3).map((podcaster) => (
             <div
               key={podcaster._id}
               className="flex cursor-pointer justify-between"

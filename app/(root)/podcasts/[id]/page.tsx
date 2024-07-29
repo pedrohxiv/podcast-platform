@@ -2,12 +2,15 @@
 
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
-import { Loader2 } from "lucide-react";
 import Image from "next/image";
 
 import { EmptyState } from "@/components/empty-state";
-import { PodcastCard } from "@/components/podcast-card";
-import { PodcastDetailPlayer } from "@/components/podcast-detail-player";
+import { PodcastCard, PodcastCardSkeleton } from "@/components/podcast-card";
+import {
+  PodcastDetailPlayer,
+  PodcastDetailPlayerSkeleton,
+} from "@/components/podcast-detail-player";
+import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 
@@ -29,9 +32,23 @@ const PodcastPage = ({ params }: Props) => {
 
   if (!podcast) {
     return (
-      <div className="flex-center h-screen w-full">
-        <Loader2 className="animate-spin text-orange-1 size-7" />
-      </div>
+      <section className="flex w-full flex-col">
+        <header className="mt-9 flex items-center justify-between">
+          <h1 className="text-20 font-bold text-white-1">Current Playing</h1>
+          <figure className="flex gap-3">
+            <Skeleton className="size-[24px]" />
+            <Skeleton className="size-6" />
+          </figure>
+        </header>
+        <PodcastDetailPlayerSkeleton />
+        <Skeleton className="h-48 w-full pb-8 mt-[45px]" />
+        <section className="mt-8 flex flex-col gap-5">
+          <h1 className="text-20 font-bold text-white-1">Similar Podcasts</h1>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <PodcastCardSkeleton key={i} />
+          ))}
+        </section>
+      </section>
     );
   }
 
