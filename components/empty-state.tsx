@@ -23,6 +23,7 @@ export const EmptyState = ({
         height={250}
         width={250}
         alt="empty state"
+        className="h-auto w-auto"
       />
       <div className="flex-center w-full max-w-[254px] flex-col gap-3">
         <h1 className="text-16 text-center font-medium text-white-1">

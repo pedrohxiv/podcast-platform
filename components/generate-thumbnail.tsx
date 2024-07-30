@@ -204,6 +204,7 @@ export const GenerateThumbnail = ({
                 height={40}
                 width={40}
                 alt="upload"
+                className="h-auto w-auto"
               />
               <h2 className="text-12 font-bold text-orange-1">
                 Click to Upload

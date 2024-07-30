@@ -70,6 +70,7 @@ export const ProfileCard = ({ listeners, name, podcasts, imageUrl }: Props) => {
         width={250}
         alt="podcaster"
         className="aspect-square rounded-lg"
+        priority
       />
       <div className="flex flex-col justify-center max-md:items-center">
         <div className="flex flex-col gap-2.5">
@@ -79,6 +80,7 @@ export const ProfileCard = ({ listeners, name, podcasts, imageUrl }: Props) => {
               height={15}
               width={15}
               alt="verified"
+              className="h-auto w-auto"
             />
             <h2 className="text-14 font-medium text-white-2">
               Verified Creator

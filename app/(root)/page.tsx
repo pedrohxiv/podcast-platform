@@ -74,11 +74,8 @@ const RootPage = () => {
                 </div>
               ))
             : latestPodcasts?.slice(0, 4).map((podcast, i) => (
-                <Link href={`/podcasts/${podcast._id}`}>
-                  <div
-                    key={podcast._id}
-                    className="flex cursor-pointer justify-between text-white-1 hover:text-orange-1"
-                  >
+                <Link href={`/podcasts/${podcast._id}`} key={podcast._id}>
+                  <div className="flex cursor-pointer justify-between text-white-1 hover:text-orange-1">
                     <div className="flex items-center gap-2 w-72">
                       <h2 className="text-14 font-semibold mr-2">{i + 1}</h2>
                       <Image
@@ -118,7 +115,7 @@ const RootPage = () => {
                         height={24}
                         width={24}
                         alt="three dots"
-                        className="rotate-90"
+                        className="rotate-90 h-auto w-auto"
                       />
                     </div>
                   </div>

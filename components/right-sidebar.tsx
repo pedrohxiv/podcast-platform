@@ -142,6 +142,7 @@ export const RightSidebar = () => {
                         width={242}
                         alt="card"
                         className="rounded-xl"
+                        priority
                       />
                       <div className="glassmorphism-black absolute bottom-0 z-10 flex flex-col rounded-b-xl p-4 w-[242px]">
                         <h2 className="text-14 font-semibold text-white-1">

@@ -103,6 +103,7 @@ export const PodcastDetailPlayer = ({
           width={250}
           alt="Podcast image"
           className="aspect-square rounded-lg"
+          priority
         />
         <div className="flex w-full flex-col flex-1 gap-5 max-md:items-center md:gap-9">
           <article className="flex flex-col gap-2 max-md:items-center">
@@ -118,7 +119,7 @@ export const PodcastDetailPlayer = ({
                       width={24}
                       height={24}
                       alt="Three dots icon"
-                      className="cursor-pointer"
+                      className="cursor-pointer h-auto w-auto"
                     />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent side="bottom">
