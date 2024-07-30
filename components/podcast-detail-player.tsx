@@ -13,11 +13,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
-import { Skeleton } from "./ui/skeleton";
 
 interface Props {
   audioStorageId: Id<"_storage">;
@@ -49,6 +49,7 @@ export const PodcastDetailPlayer = ({
   const router = useRouter();
 
   const deletePodcast = useMutation(api.podcasts.deletePodcast);
+  const updatePodcastViews = useMutation(api.podcasts.updatePodcastViews);
 
   const { toast } = useToast();
   const { setAudio } = useAudio();
@@ -77,7 +78,9 @@ export const PodcastDetailPlayer = ({
     }
   };
 
-  const handlePlay = () => {
+  const handlePlay = async () => {
+    await updatePodcastViews({ podcastId });
+
     setAudio({
       audioUrl,
       author,
@@ -103,9 +106,39 @@ export const PodcastDetailPlayer = ({
         />
         <div className="flex w-full flex-col flex-1 gap-5 max-md:items-center md:gap-9">
           <article className="flex flex-col gap-2 max-md:items-center">
-            <h1 className="text-32 font-extrabold tracking-[-0.32px] text-white-1">
-              {title}
-            </h1>
+            <div className="flex flex-row w-full items-center justify-between">
+              <h1 className="text-32 font-extrabold tracking-[-0.32px] text-white-1 flex-1">
+                {title}
+              </h1>
+              {isOwner && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="h-fit" disabled={isDeleting}>
+                    <Image
+                      src="/icons/three-dots.svg"
+                      width={24}
+                      height={24}
+                      alt="Three dots icon"
+                      className="cursor-pointer"
+                    />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent side="bottom">
+                    <DropdownMenuItem
+                      className="text-white-1 gap-2 cursor-pointer bg-black-6"
+                      onClick={handleDelete}
+                      disabled={isDeleting}
+                    >
+                      <Image
+                        src="/icons/delete.svg"
+                        width={16}
+                        height={16}
+                        alt="Delete icon"
+                      />
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
             <figure
               className={cn("flex cursor-pointer items-center gap-2", {
                 "cursor-default": isDeleting,
@@ -137,34 +170,6 @@ export const PodcastDetailPlayer = ({
           </Button>
         </div>
       </div>
-      {isOwner && (
-        <DropdownMenu>
-          <DropdownMenuTrigger className="h-fit" disabled={isDeleting}>
-            <Image
-              src="/icons/three-dots.svg"
-              width={24}
-              height={24}
-              alt="Three dots icon"
-              className="cursor-pointer"
-            />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent side="left">
-            <DropdownMenuItem
-              className="text-white-1 gap-2 cursor-pointer bg-black-6 hover:bg-black-2"
-              onClick={handleDelete}
-              disabled={isDeleting}
-            >
-              <Image
-                src="/icons/delete.svg"
-                width={16}
-                height={16}
-                alt="Delete icon"
-              />
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )}
     </div>
   );
 };
@@ -176,8 +181,11 @@ export const PodcastDetailPlayerSkeleton = () => {
         <Skeleton className="size-[250px]" />
         <div className="flex w-full flex-col flex-1 gap-5 max-md:items-center md:gap-9">
           <article className="flex flex-col gap-2 max-md:items-center">
-            <Skeleton className="h-12 w-64" />
-            <figure className="flex cursor-pointer items-center gap-2">
+            <div className="flex flex-row w-full items-center justify-between">
+              <Skeleton className="h-10 w-64" />
+              <Skeleton className="size-[24px]" />
+            </div>
+            <figure className="flex cursor-pointer items-center gap-2 mt-2">
               <Skeleton className="size-[30px] rounded-full" />
               <Skeleton className="h-6 w-28" />
             </figure>
@@ -185,7 +193,6 @@ export const PodcastDetailPlayerSkeleton = () => {
           <Skeleton className="h-10 w-full max-w-[250px]" />
         </div>
       </div>
-      <Skeleton className="size-[24px]" />
     </div>
   );
 };

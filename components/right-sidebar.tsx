@@ -1,6 +1,6 @@
 "use client";
 
-import { SignedIn, useUser } from "@clerk/nextjs";
+import { useSession } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
@@ -21,7 +21,7 @@ import { api } from "@/convex/_generated/api";
 export const RightSidebar = () => {
   const router = useRouter();
 
-  const { user } = useUser();
+  const { isLoaded, session } = useSession();
 
   const carouselPlugin = useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
@@ -33,7 +33,7 @@ export const RightSidebar = () => {
     (podcaster) => podcaster.totalPodcasts > 0
   );
 
-  if (!slides || !topPodcasters) {
+  if (!isLoaded || !slides || !topPodcasters) {
     return (
       <section className="right_sidebar">
         <div className="flex gap-3 items-center">
@@ -75,10 +75,13 @@ export const RightSidebar = () => {
 
   return (
     <section className="right_sidebar text-white-1">
-      <SignedIn>
-        <Link href={`/profile/${user?.id}`} className="flex gap-3 items-center">
+      {session ? (
+        <Link
+          href={`/profile/${session.user.id}`}
+          className="flex gap-3 items-center"
+        >
           <Image
-            src={user?.imageUrl!}
+            src={session.user.imageUrl}
             height={28}
             width={28}
             alt="user"
@@ -86,7 +89,7 @@ export const RightSidebar = () => {
           />
           <div className="flex w-full items-center justify-between">
             <h1 className="text-16 truncate font-semibold text-white-1">
-              {user?.firstName} {user?.lastName}
+              {session.user.firstName} {session.user.lastName}
             </h1>
             <Image
               src="/icons/right-arrow.svg"
@@ -96,7 +99,22 @@ export const RightSidebar = () => {
             />
           </div>
         </Link>
-      </SignedIn>
+      ) : (
+        <Link
+          href="/sign-in"
+          className="h-7 flex w-full items-center justify-between"
+        >
+          <h1 className="text-16 truncate font-semibold text-orange-1">
+            Sign in
+          </h1>
+          <Image
+            src="/icons/right-arrow.svg"
+            height={24}
+            width={24}
+            alt="arrow"
+          />
+        </Link>
+      )}
       <section className="flex flex-col gap-4 pt-6">
         <Header title="Fans Also Like" />
         <Carousel

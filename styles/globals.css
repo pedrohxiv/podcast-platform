@@ -12,27 +12,6 @@ html {
   background-color: #101114;
 }
 
-@layer base {
-  .remove-scrollbar::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    border-radius: 0px;
-  }
-
-  .remove-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .remove-scrollbar::-webkit-scrollbar-thumb {
-    background: transparent;
-    border-radius: 0px;
-  }
-
-  .remove-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: transparent;
-  }
-}
-
 @layer utilities {
   .input-class {
     @apply text-16 placeholder:text-16 bg-black-1 rounded-[6px] placeholder:text-gray-1 border-none text-gray-1;
